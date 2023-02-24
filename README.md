@@ -117,7 +117,7 @@ Don't worry about the mismatch between the port numbers in `launch.json` and `co
 5. Debug as if the code is running on your local machine!
 
 
-# Tips on cluster usage
+# Cluster usage policy
 
 * **Disk storage**: Always use [workspaces](https://kb.hlrs.de/platforms/index.php/Workspace_mechanism) for storing experiment data and for any I/O during a program run. This keeps the load on the login node low and allows faster I/O. Check `man ws_list`, `man ws_allocate` and `man ws_extend`.
 * **Shared workspace**: When working on a collaborative project. Creating and executing [this script](https://gist.github.com/Neeratyoy/4cdf58f770164dfeea8be0e8d47fb6a7) allows read-write for other users.
