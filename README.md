@@ -128,6 +128,7 @@ Don't worry about the mismatch between the port numbers in `launch.json` and `co
     * A node has multiple CPU cores (~20) and the node RAM is split among these cores (~6 GB per CPU)
     * Requesting more than 6GB could actually request more than 1 CPU overriding the `--cpus-per-task` or `-c` flags
     * A good practice is to use `srun` or a test `sbatch` job to test actual memory requirements
+  * *Alternatively*: to keep estimates easier, `-c` can be used directly to request resources (for e.g. `-c 2` == `--mem 12G` and `-c 4` == `--mem 24G`)
   * Time limits: Note the default timelimit of a job on a partition by `sinfo` when not specifying explicitly
     * The scheduler priority assigned to a job is often inversely proportional to the timilimit specified
 * **Array jobs**: To prevent filling out a partition and leave resources for other users, using an [arrayjob](https://slurm.schedmd.com/job_array.html) is a must for multiple job deployments
