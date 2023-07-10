@@ -11,7 +11,8 @@
    - [Remote access via VSCode](#remote-access-via-vscode)
    - [Configuring the Debug Setup](#configuring-the-debug-setup)
    - [Debugging](#debugging)
-4. [Cluster usage policy](#cluster-usage-policy)
+4. [Running Jupyter Notebook on GPU on the cluster](#running-jupyter-notebook-on-gpu-on-the-cluster)
+5. [Cluster usage policy](#cluster-usage-policy)
 
 # Setting up the repo
 1. Clone this repository in the remote machine
@@ -130,6 +131,55 @@ Don't worry about the mismatch between the port numbers in `launch.json` and `co
 4. The code waits until the client is attached to run.
    * `View` > `Run` > `Python: Remote Attach`
 5. Debug as if the code is running on your local machine!
+
+
+# Running Jupyter Notebook on GPU on the cluster
+You can run a Jupyter notebook on a GPU on the cluster and access it on the browser on your local machine using SSH port forwarding. Here's how you can do this (the instructions are taken from [this tutorial](https://alexanderlabwhoi.github.io/post/2019-03-08_jpn_slurm/)):
+
+1. Run an interactive session as shown in the [section above](#running-an-interactive-session).
+2. Once you are logged into a node, start your jupyter notebook.
+
+   ```myuser@dlcgpu50:/path/to/my/directory$ jupyter notebook --no-browser --port=9001```
+
+   Here, `myuser` is logged into node `dlcgpu50`, and starts a jupyter notebook which listens in on port 9001.
+3. Create an SSH tunnel to the node that runs your Jupyter notebook.
+
+   Open a new terminal on your local machine and:
+
+   ```ssh -t -t myuser@kisxxx.xx.xx.xx -L 9001:localhost:9001 ssh dlcgpu50 -L 9001:localhost:9001```
+4. Once the tunnel is established, you can open `localhost:9001` on your local machine to work on the Jupyter noteboook as if it is running on your machine, while still access the code and data that is available on the cluster.
+
+## Making it easier
+Steps 2 and 3 can be made easier by adding the following entries in your `.bash_profile` on the remote and the local machines.
+
+1. On the remote machine (i.e., the cluster):
+```
+function jpt(){
+    jupyter notebook --no-browser --port=$1
+}
+```
+
+2. On your local machine:
+```
+function sshtojptnode(){
+   # Forwards port $1 from node $2 into port $1 on the local machine and listens to it
+   ssh -t -t youruser@kisxxxx.xx.xx.xxx -L $1:localhost:$1 ssh $2 -L $1:localhost:$1
+}
+```
+
+Once there are ready, remotely running Jupyter notebooks is easy!
+
+1. On the remote machine
+```
+myuser@dlcgpu13:/path/to/your/directory$ jpt 9001
+```
+
+2. On your local machine
+```
+sshtojptnode 9001 dlcgpu13
+```
+
+3. Now, simply fire up `localhost:9001` on your browser on your local machine.
 
 
 # Cluster usage policy
