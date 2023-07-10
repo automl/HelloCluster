@@ -1,3 +1,18 @@
+# Contents:
+1. [Setting up the repo](#setting-up-the-repo)
+2. [Running the code on KI-SLURM](#running-the-code-on-ki-slurm)
+   - [Finding out partitions you have access to](#finding-out-partitions-you-have-access-to)
+   - [Submitting jobs with sbatch](#submitting-jobs-with-sbatch)
+   - [See your submitted jobs](#see-your-submitted-jobs)
+   - [Cancel your submitted jobs](#cancel-your-submitted-jobs)
+   - [See summary of the current status of the cluster](#see-summary-of-the-current-status-of-the-cluster)
+   - [Running an interactive session](#running-an-interactive-session)
+3. [Debugging on KI-SLURM](#debugging-on-ki-slurm)
+   - [Remote access via VSCode](#remote-access-via-vscode)
+   - [Configuring the Debug Setup](#configuring-the-debug-setup)
+   - [Debugging](#debugging)
+4. [Cluster usage policy](#cluster-usage-policy)
+
 # Setting up the repo
 1. Clone this repository in the remote machine
 2. Set up [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
@@ -13,7 +28,7 @@
 
 In the KI-SLURM (Meta) cluster, your account will be penalized by limiting your CPU usage for a while if you run compute-intensive processes on login nodes.
 
-# Running the code on KI-SLURM (Meta)
+# Running the code on KI-SLURM
 
 There are two ways to run scripts on the cluster:
 1. Submit a job using `sbatch`
