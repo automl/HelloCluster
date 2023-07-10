@@ -134,7 +134,7 @@ Don't worry about the mismatch between the port numbers in `launch.json` and `co
 
 
 # Running Jupyter Notebook on a GPU on the cluster
-You can run a Jupyter notebook on a GPU on the cluster and access it on the browser on your local machine using SSH port forwarding. Here's how you can do this (the instructions are taken from [this tutorial](https://alexanderlabwhoi.github.io/post/2019-03-08_jpn_slurm/)):
+You can run a Jupyter notebook on a GPU on the cluster and access it from the browser on your local machine using SSH port forwarding. Here's how you can do this (the instructions are taken from [this tutorial](https://alexanderlabwhoi.github.io/post/2019-03-08_jpn_slurm/)):
 
 1. Run an interactive session as shown in the [section above](#running-an-interactive-session).
 2. Once you are logged into a node, start your jupyter notebook.
@@ -147,7 +147,7 @@ You can run a Jupyter notebook on a GPU on the cluster and access it on the brow
    Open a new terminal on your local machine and:
 
    ```ssh -t -t myuser@kisxxx.xx.xx.xx -L 9001:localhost:9001 ssh dlcgpu50 -L 9001:localhost:9001```
-4. Once the tunnel is established, you can open `localhost:9001` on your local machine to work on the Jupyter noteboook as if it is running on your machine, while still access the code and data that is available on the cluster.
+4. Once the tunnel is established, you can open `localhost:9001` on your local machine to work on the Jupyter noteboook as if it is running on your machine, while still accessing the code and data that is available on the cluster.
 
 ## Making it easier
 Steps 2 and 3 can be made easier by adding the following entries in your `.bash_profile` on the remote and the local machines.
@@ -167,7 +167,7 @@ function sshtojptnode(){
 }
 ```
 
-Once there are ready, remotely running Jupyter notebooks is easy!
+Once these are ready, remotely running Jupyter notebooks is easy!
 
 1. On the remote machine
 ```
