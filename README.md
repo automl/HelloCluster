@@ -11,7 +11,7 @@
    - [Remote access via VSCode](#remote-access-via-vscode)
    - [Configuring the Debug Setup](#configuring-the-debug-setup)
    - [Debugging](#debugging)
-4. [Running Jupyter Notebook on GPU on the cluster](#running-jupyter-notebook-on-gpu-on-the-cluster)
+4. [Running Jupyter Notebook on a GPU on the cluster](#running-jupyter-notebook-on-a-gpu-on-the-cluster)
 5. [Cluster usage policy](#cluster-usage-policy)
 
 # Setting up the repo
@@ -133,7 +133,7 @@ Don't worry about the mismatch between the port numbers in `launch.json` and `co
 5. Debug as if the code is running on your local machine!
 
 
-# Running Jupyter Notebook on GPU on the cluster
+# Running Jupyter Notebook on a GPU on the cluster
 You can run a Jupyter notebook on a GPU on the cluster and access it on the browser on your local machine using SSH port forwarding. Here's how you can do this (the instructions are taken from [this tutorial](https://alexanderlabwhoi.github.io/post/2019-03-08_jpn_slurm/)):
 
 1. Run an interactive session as shown in the [section above](#running-an-interactive-session).
