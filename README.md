@@ -8,11 +8,11 @@
    - [See summary of the current status of the cluster](#see-summary-of-the-current-status-of-the-cluster)
    - [Running an interactive session](#running-an-interactive-session)
 3. [Debugging on KI-SLURM](#debugging-on-ki-slurm)
-   - [Remote access via VSCode](#remote-access-via-vscode)
-   - [Configuring the Debug Setup](#configuring-the-debug-setup)
+   - [Installing Remote-SSH extension for VSCode](#installing-remote-ssh-extension-for-vscode)
    - [Debugging](#debugging)
 4. [Running Jupyter Notebook on a GPU on the cluster](#running-jupyter-notebook-on-a-gpu-on-the-cluster)
-5. [Cluster usage policy](#cluster-usage-policy)
+   - [Making it easier](#making-it-easier)
+6. [Cluster usage policy](#cluster-usage-policy)
 
 # Setting up the repo
 1. Clone this repository in the remote machine
@@ -75,63 +75,27 @@ You will see that you are now logged into a compute node. From here, you may run
 *Remember that you should only do this from a *compute node* that you acquired using `srun`, never a login node.*
 
 # Debugging on KI-SLURM
+To remotely debug code residing in the cluster, we require the `Remote-SSH` extension for [VSCode](https://code.visualstudio.com/). We shall begin by installing it.
 
-We will use [VSCode](https://code.visualstudio.com/) and Simon Schrodi's scripts to debug the code that is running on the cluster. There are two parts to setting this up:
-1. Install `Remote - SSH` extension on VSCode
-2. Clone [Simon's repository](https://github.com/infomon/vscode_remote_debugging) and configure the debugging setup
-## Remote access via VSCode
+## Installing Remote-SSH extension for VSCode
 
-For developing code that sits on remote systems, it is convenient to use VSCode with Remote - SSH extension.
+Install the `Remote-SSH` extension for VSCode as follows:
 
 1. Bring up the Extensions view (Ctrl+Shift+X / Cmd+Shift+X). Or, `View` > `Extensions`
 2. Install `Remote - SSH` extension (Extension ID: ms-vscode-remote.remote-ssh)
-3. `View` > `Command Palette` > `Remote-SSH: Connect to Host...` > `+ Add New SSH Host` > `ssh <your_user>@kislogin2.xx.xx.xxxxxx`
-4. Once you're connected to remote, you should be able to navigate to the directory of your repo in the Explorer (Ctrl+Shift+E / Cmd+Shift+E / `View` > `Explorer`)
 
-## Configuring the Debug Setup
-1. Clone [Simon's repository](https://github.com/infomon/vscode_remote_debugging) in your remote machine, in this repository directory, i.e., inside `/path/to/HelloCluster/`.
-2. Follow the instructions in his repo for the one-time setup.
-
-Your configured `config.conf` should look something like this
-
-```
-WORKDIR /path/to/HelloCluster
-PORT 4242
-LAUNCH_JSON .vscode/launch.json
-CONDA_SOURCE /path/to/miniconda3/bin/activate
-CONDA_ENV hello_cluster_env
-```
-
-Your `.vscode/launch.json` should look like this (comments and `pathMappings` removed):
-```
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Python: Remote Attach",
-            "type": "python",
-            "request": "attach",
-            "connect": {
-                "host": "localhost",
-                "port": 5678
-            }
-        }
-    ]
-}
-```
-
-Don't worry about the mismatch between the port numbers in `launch.json` and `config.conf`. That will be fixed by `init.sh` in the next part.
 ## Debugging
+You can run your code that resides on the cluster while debugging it with VSCode as follows:
 1. Start an interactive session:
-   * `srun -p <partition_name> --pty bash`
-2. Initialize `launch.json` with the details from `config.conf`
-   *  `bash vscode_remote_debugging/init.sh`
-3. Start the debugging session
-   * `bash ./scripts/meta/debug.sh`
-4. The code waits until the client is attached to run.
-   * `View` > `Run` > `Python: Remote Attach`
-5. Debug as if the code is running on your local machine!
+   * `srun -p <partition_name> --pty bash <...other options>`
+2. This will log you into a node with the requested resources
+   ```myuser@dlcgpuxyz:~$```
+   Here, `myuser` is logged into node `dlcgpuxyz`
+4. Now, use the `Remote-SSH` extension to log into that node.
+   * `View` > `Command Palette` > `Remote-SSH: Connect to Host...` > `+ Add New SSH Host` > `ssh myuser@dlcgpuxyz`
+5. Once you're logged into the node, you can navigate to the directory of your repo in the Explorer (Ctrl+Shift+E / Cmd+Shift+E / `View` > `Explorer`)
 
+You can now run and debug your code using the same workflows as when the code resides (and runs) on your local machine. Make sure you select your Python Interpreter (`Ctrl + Shift + P` > `Python: Select Interpreter`) from your conda environment before you run your code.
 
 # Running Jupyter Notebook on a GPU on the cluster
 You can run a Jupyter notebook on a GPU on the cluster and access it from the browser on your local machine using SSH port forwarding. Here's how you can do this (the instructions are taken from [this tutorial](https://alexanderlabwhoi.github.io/post/2019-03-08_jpn_slurm/)):
