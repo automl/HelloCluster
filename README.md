@@ -97,6 +97,8 @@ You can run your code that resides on the cluster while debugging it with VSCode
 
 You can now run and debug your code using the same workflows as when the code resides (and runs) on your local machine. Make sure you select your Python Interpreter (`Ctrl + Shift + P` > `Python: Select Interpreter`) from your conda environment before you run your code.
 
+Your session might get terminated if there is no activity in it for too long (scripts running on the node via VSCode remote ssh does not count). The easiest way to get around this is to start a `screen` session once your interactive session begins.
+
 # Running Jupyter Notebook on a GPU on the cluster
 You can run a Jupyter notebook on a GPU on the cluster and access it from the browser on your local machine using SSH port forwarding. Here's how you can do this (the instructions are taken from [this tutorial](https://alexanderlabwhoi.github.io/post/2019-03-08_jpn_slurm/)):
 
